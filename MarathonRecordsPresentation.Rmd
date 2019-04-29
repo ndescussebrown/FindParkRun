@@ -1,0 +1,185 @@
+---
+title: "All-time Marathon Records by Age and Sex"
+author: "Nathalie Descusse-Brown"
+date: "April 10, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE,warning=FALSE,message=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction
+
+This presentation presents the all-time marathon records by age and sex. The data used was gathered by the Association of Road Racing Statisticians and can be accessed here: https://www.arrs.run/SA_Mara.htm.  
+
+```{r mydata, cache=TRUE}
+
+suppressPackageStartupMessages(library(textreadr))
+suppressPackageStartupMessages(library(XML))
+suppressPackageStartupMessages(library(lubridate))
+
+
+url <- "https://www.arrs.run/SA_Mara.htm"
+txt <- read_html(url)
+txt2 <- strsplit(as.character(txt),"\\s{2,}")
+
+dfmen <- data.frame()
+
+j<-1
+for (i in 1:89) {
+        if (i==1) {
+             dfmen[i,1] <- txt2[i*2+1][[1]][1] 
+             dfmen[i,2] <- txt2[i*2+j+1][[1]][1] 
+             dfmen[i,3] <- txt2[i*2+j+1][[1]][2]
+             dfmen[i,4] <- txt2[i*2+j+1][[1]][4]
+             dfmen[i,5] <- txt2[i*2+j+1][[1]][5]
+        }
+        else if (i==2 | i==6 | i==7 | i==88 | i==89) {
+            dfmen[i,1] <- paste(i+3,"y",sep="") 
+            dfmen[i,2] <- ""
+            dfmen[i,3] <- ""
+        }
+        else if (i==3) {
+                dfmen[i,1] <- txt2[(i-1)*2+1][[1]][2]
+                dfmen[i,2] <- txt2[(i-1)*2+j+1][[1]][1] 
+                dfmen[i,3] <- txt2[(i-1)*2+j+1][[1]][2]
+                dfmen[i,4] <- txt2[(i-1)*2+j+1][[1]][4]
+                dfmen[i,5] <- txt2[(i-1)*2+j+1][[1]][5]
+         }
+       else {
+                if (i==8) {j <- j-3}
+                if (i== 16) {j <- j+1}
+                if (i== 31) {j <- j+1}
+                if (i== 40) {j <- j+1}
+                if (i== 43) {j <- j+1}
+                if (i==48) {j <- j+1}
+                if (i== 53) {j <- j+1}
+                if (i== 58) {j <- j+1}
+                if (i== 63) {j <- j+1}
+                if (i== 71) {j <- j+1}
+               if (i== 74) {j <- j+1}
+               if (i== 78) {j <- j+1}
+               if (i== 83) {j <- j+1}
+                dfmen[i,1] <- txt2[(i-1)*2+j][[1]][1]
+                dfmen[i,2] <- txt2[(i-1)*2+j+1][[1]][1] 
+                if (i==15 |i==30 | i==39 | i==42 | i==47 | i==52 | i==57 | i==62 | i==70 | i==73 | i==77 | i==82 | i==87)
+                {dfmen[i,3] <- txt2[(i-1)*2+j+2][[1]][1]
+                 dfmen[i,4] <- txt2[(i-1)*2+j+2][[1]][3]
+                dfmen[i,5] <- txt2[(i-1)*2+j+2][[1]][4]
+                }
+                else {
+                        dfmen[i,3] <- txt2[(i-1)*2+j+1][[1]][2]
+                        dfmen[i,4] <- txt2[(i-1)*2+j+1][[1]][4]
+                dfmen[i,5] <- txt2[(i-1)*2+j+1][[1]][5]
+                }
+                
+        }
+}
+colnames(dfmen) <- c("men_age","men_time","men_name","men_year_of_event","men_event")
+
+# dfmen$men_datetime <- as.POSIXct(strptime(paste(today(), dfmen$men_time, sep=" "), format="%Y-%m-%d %H:%M:%S"))
+# for (j in 1:89) {
+#  dfmen$men_ageforplot[j] <- strsplit(as.character(dfmen$men_age),"y")[[j]][1]
+# }
+
+dfwomen <- data.frame()
+
+j<-1
+for (i in 1:87) {
+        if (i==86) {
+                dfwomen[i,1] <- as.character("91y")
+                 dfwomen[i,2] <- ""
+                 dfwomen[i,3] <- ""
+                 dfwomen[i,4] <- ""
+                 dfwomen[i,5] <- ""
+        }
+         else if (i==87) {
+                j <- j+2
+            dfwomen[i,1] <- txt2[183+(i-1)*2+j][[1]][1] 
+            dfwomen[i,2] <- txt2[183+(i-1)*2+j+1][[1]][1] 
+            dfwomen[i,3] <- txt2[183+(i-1)*2+j+1][[1]][2]
+            dfwomen[i,4] <- txt2[183+(i-1)*2+j+1][[1]][4]
+            dfwomen[i,5] <- txt2[183+(i-1)*2+j+1][[1]][5]
+        }
+       else {
+                if (i==15) {j <- j+1}
+                if (i==25) {j <- j+1}
+                if (i==31) {j <- j+1}
+                if (i==37) {j <- j+1}
+                if (i==41) {j <- j+1}
+                if (i==46) {j <- j+1}
+                if (i==51) {j <- j+1}
+                if (i==56) {j <- j+1}
+                if (i==61) {j <- j+1}
+                if (i==66) {j <- j+1}
+                if (i==72) {j <- j+1}
+                if (i==77) {j <- j+1}
+                if (i==81) {j <- j+1}
+                dfwomen[i,1] <- txt2[183+i*2+j][[1]][1]
+                dfwomen[i,2] <- txt2[183+i*2+j+1][[1]][1] 
+                if (i==14 | i==24 | i==30 | i==36 | i==40 | i==45 | i==50 | i==55 | i==60 | i==65 | i==71 | i==76 | i==80 | i==85)
+                {dfwomen[i,3] <- txt2[183+i*2+j+2][[1]][1]
+                 dfwomen[i,4] <- txt2[183+i*2+j+2][[1]][3]  
+                 dfwomen[i,5] <- txt2[183+i*2+j+2][[1]][4]
+                }
+                else {dfwomen[i,3] <- txt2[183+i*2+j+1][[1]][2]
+                dfwomen[i,4] <- txt2[183+i*2+j+1][[1]][4]
+                dfwomen[i,5] <- txt2[183+i*2+j+1][[1]][5]
+                }
+        }
+}
+
+colnames(dfwomen) <- c("women_age","women_time","women_name","women_year_of_event","women_event")
+
+dfwomen_add <- data.frame(women_age=c("4y","5y"),women_time=c("",""),women_name=c("",""),women_year_of_event=c("",""),women_event=c("",""))
+dfwomen <- rbind(dfwomen_add,dfwomen)
+
+dfmen$men_datetime <- as.POSIXlt(paste(today(), dfmen$men_time, sep=" "), format="%Y-%m-%d %H:%M:%S")
+# dfmen$timesforplot <- as.POSIXct(dfmen$datetime, format="%H:%M:%S")
+for (j in 1:89) {
+ dfmen$men_ageforplot[j] <- strsplit(dfmen$men_age,"y")[[j]][1]
+}
+dfmen$men_ageforplot <- as.numeric(dfmen$men_ageforplot)
+
+dfwomen$women_datetime <- as.POSIXlt(paste(today(), dfwomen$women_time, sep=" "), format="%Y-%m-%d %H:%M:%S")
+# dfwomen$timesforplot <- times(format(dfwomen$datetime, "%H:%M:%S"))
+for (j in 1:89) {
+ dfwomen$women_ageforplot[j] <- strsplit(as.character(dfwomen$women_age),"y")[[j]][1]
+}
+dfwomen$women_ageforplot <- as.numeric(dfwomen$women_ageforplot)
+
+suppressPackageStartupMessages(library(reshape))
+dfmenmelt <- melt(dfmen[,6:7],id.vars = "men_ageforplot")
+names(dfmenmelt)[1] <- "age"
+names(dfmenmelt)[2] <- "sex"
+names(dfmenmelt)[3] <- "marathon_time"
+dfmenmelt$sex <- "men"
+dfmenmelt <- cbind(dfmenmelt,name=dfmen$men_name) 
+
+dfwomenmelt <- melt(dfwomen[,6:7],id.vars = "women_ageforplot")
+names(dfwomenmelt)[1] <- "age"
+names(dfwomenmelt)[2] <- "sex"
+names(dfwomenmelt)[3] <- "marathon_time"
+dfwomenmelt$sex <- "women"
+dfwomenmelt <- cbind(dfwomenmelt,name=dfwomen$women_name) 
+
+dfmelt <- rbind(dfmenmelt,dfwomenmelt)
+
+# dfmelt$time <- dfmelt$time - trunc(dfmelt$time, "days")
+
+```
+
+## Marathon records for men and women by age
+
+```{r myplot,dependson="mydata", cache=TRUE,warning=FALSE,message=FALSE}
+suppressPackageStartupMessages(library(plotly))
+suppressPackageStartupMessages(library(stringr)) 
+dfmelt$mytext <- paste(dfmelt$name,", age:",dfmelt$age,", time:",substr(dfmelt$marathon_time,start=12,stop=19)) 
+plot_ly(dfmelt,x=~age,y=~marathon_time,type="scatter",color=~sex,text=~mytext,hoverinfo ='text') %>% layout(yaxis = list(type='date',tickformat = "%H:%M:%S")) 
+
+
+```
+
+
+## Thank you!
