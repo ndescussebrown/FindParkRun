@@ -1,0 +1,38 @@
+---
+title: "Total Average Snowfall for Eastern Switzerland between 1981 and 2010"
+author: "Nathalie Descusse-Brown"
+date: "April 8, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,warning=FALSE,message=FALSE)
+```
+
+## R Markdown
+
+This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+
+## Slide with R Output
+
+```{r snow, echo = FALSE}
+library(leaflet)
+library(textreadr)
+url <- "https://www.currentresults.com/Weather/Switzerland/snowfall-annual-average.php"
+file <- download(url)
+txt <- read_html(url)
+txt <- read_html(file)
+avgsnowfall <- data.frame(town = txt[seq(146,186,4)],
+                        snowfall = as.numeric(txt[seq(148,188,4)]),
+                        lat = c(46.7824,46.8508,46.8027,46.6800,47.0404,46.1670,46.0037,46.5340,46.4626,46.7969,46.8276),
+                        lng = c(9.6799,9.5320,9.8360,8.7746,9.0672,8.7943,8.9511,9.8729,9.1920,10.2977,9.8062))
+avgsnowfall %>%
+  leaflet() %>%
+  addTiles() %>%
+  # addCircles(weight = 1, radius = sqrt(avgsnowfall$snowfall) * 30)
+  addCircleMarkers(weight = 1, radius = sqrt(avgsnowfall$snowfall) * 1,popup=paste(avgsnowfall$town," ",avgsnowfall$snowfall,"cm",sep=""))
+```
+

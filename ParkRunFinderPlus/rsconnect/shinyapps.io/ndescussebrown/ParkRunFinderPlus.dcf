@@ -1,0 +1,13 @@
+name: ParkRunFinderPlus
+title: ParkRunFinderPlus
+username:
+account: ndescussebrown
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 898664
+bundleId: 2047873
+url: https://ndescussebrown.shinyapps.io/ParkRunFinderPlus/
+when: 1556571922.58641
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|160517-Parkrun.png|appscreenshot.JPG|coordinates_distance.R|findParkrunUKplus.html|findParkrunUKplus.R|findParkrunUKplusdistance_29Apr2019.R|latlong.Rdata|latlongdist.csv|output.txt|ParkRunUKFinder.md|ParkRunUKFinder.Rpres|PRdf_old.csv|test.md|test.Rpres|test.txt|test-figure/unnamed-chunk-2-1.png

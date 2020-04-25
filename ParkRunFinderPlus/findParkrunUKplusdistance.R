@@ -25,11 +25,8 @@ findParkrunUKplusdistance <- function(postcode) {
         longinput <- postcodes[which(postcodes[,2]==postcode),4]
         
         if (file.exists("PRdf.csv")) {
-                # appfile <- read.csv("latlongdist.csv")
                 appfile <- read.csv("PRdf.csv")
                 matrix2 <- matrix(c(as.numeric(appfile$Longnum), as.numeric(appfile$Latnum)),nrow=dim(appfile)[1],ncol=2)
-                # latnum <- appfile$Latnum
-                # longnum <- appfile$Longnum
                 dist <- distm(matrix2,c(longinput,latinput), fun = distHaversine)
                 dist <- as.numeric(dist)/1609
                 appfile <- cbind(appfile[,-c(1,c(7:9))],dist)
@@ -90,8 +87,6 @@ findParkrunUKplusdistance <- function(postcode) {
                 town <- vector(mode="character")
                 
                 for (j in 1:dim(PRdf)[1]) {
-                        # townurl <- paste0(baseurl, gsub("^(.*?),.*", "\\1", PRdf[j,2]))
-                        # townurl <- gsub(" ", "_", townurl)
                         townurl <- paste0(baseurl, PRdf[j,6])
                         town[j] <- townurl
                         lattemp <- ""
@@ -175,12 +170,9 @@ findParkrunUKplusdistance <- function(postcode) {
                                 longnum[j] <- ""
                         }
                 }
-                # write.csv(cbind(latnum,longnum,town),"latlongdist.csv")
                 PRdf$Region <- substring(PRdf$Region,regexpr("[A-Z]",PRdf$Region))
                 PRdf$Latnum <- latnum
                 PRdf$Longnum <- longnum
-                # PRdf$Distance <- as.numeric(dist)/1000
-                # names(PRdf)[7] <- paste(names(PRdf)[7]," in miles")
                 PRdf$Name <- gsub("[[0-9](.*?)]","",as.character(PRdf$Name))
                 write.csv(PRdf,"PRdf.csv")
         }

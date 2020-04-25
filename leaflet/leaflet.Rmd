@@ -106,7 +106,7 @@ make your own markers from `.png` files.
 
 ```{r, eval=FALSE}
 hopkinsIcon <- makeIcon(
-  iconUrl = "http://brand.jhu.edu/content/uploads/2014/06/university.shield.small_.blue_.png",
+  iconUrl = "jhu-divisions-school_of_health.png",
   iconWidth = 31*215/230, iconHeight = 31,
   iconAnchorX = 31*215/230/2, iconAnchorY = 16
 )

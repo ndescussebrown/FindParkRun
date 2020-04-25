@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/484603/7da6a93a976c46a08bdcf113b3db0e68
+bundleId: https://api.rpubs.com/api/v1/document/484603/7da6a93a976c46a08bdcf113b3db0e68
+url: http://rpubs.com/ndescussebrown/484603
+when: 1554732243.96912

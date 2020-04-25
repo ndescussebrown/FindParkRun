@@ -70,7 +70,7 @@ shinyUI(fluidPage(
                 
                 # Show the list of ParkRuns requested
                 mainPanel(
-                        dataTableOutput("selectedParkruns")  %>% withSpinner(color="#0dc5c1")
+                        withSpinner(dataTableOutput("selectedParkruns"),color="#0dc5c1")
                 )
 
         )
